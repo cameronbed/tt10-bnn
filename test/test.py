@@ -31,9 +31,11 @@ async def test_project(dut):
             port='/dev/ttyUSB0',  # Update this based on your setup (use a virtual serial port)
             baudrate=115200,  # Match the UART baudrate in DUT
             timeout=1  # Timeout for read operation
+            print(f"Serial port opened: {uart}"
         )
     except serial.SerialException as e:
         dut._log.error(f"Serial port error: {e}")
+        print(f"Serial port error: {e}")
         return
 
     dut._log.info("Test project behavior")
