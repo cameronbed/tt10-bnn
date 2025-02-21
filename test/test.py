@@ -5,6 +5,8 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
+import serial
+import time
 
 @cocotb.test()
 async def test_project(dut):
@@ -22,6 +24,17 @@ async def test_project(dut):
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
+    
+    # Open Serial Port (loopback device or use virtual serial)
+    try:
+        uart = serial.Serial(
+            port='/dev/ttyUSB0',  # Update this based on your setup (use a virtual serial port)
+            baudrate=115200,  # Match the UART baudrate in DUT
+            timeout=1  # Timeout for read operation
+        )
+    except serial.SerialException as e:
+        dut._log.error(f"Serial port error: {e}")
+        return
 
     dut._log.info("Test project behavior")
 
