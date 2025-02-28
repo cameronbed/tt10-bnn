@@ -1,5 +1,3 @@
-`include "baud_generator.sv"
-
 module uart_rx (
     input wire rst,
     input wire baud_clk,
