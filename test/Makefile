@@ -5,7 +5,7 @@
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.sv
+PROJECT_SOURCES = project.v
 PROJECT_SOURCES += baud_generator.sv
 PROJECT_SOURCES += controller.sv
 PROJECT_SOURCES += uart_rx.sv
