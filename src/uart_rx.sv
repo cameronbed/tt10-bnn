@@ -11,8 +11,7 @@ module uart_rx (
     input cts,
     output rts,
 
-    output rx_buffer_empty,
-    output logic data_valid    
+    output rx_buffer_empty 
 );
     logic [6:0] rx_buffer;
 
