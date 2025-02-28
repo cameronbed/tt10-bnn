@@ -6,7 +6,6 @@ from cocotb.clock import Clock
 from cocotb.triggers import ClockCycles
 
 import serial
-import time
 
 @cocotb.test()
 async def test_project(dut):
@@ -63,6 +62,9 @@ async def test_project(dut):
     dut.uio_in.value = 10
     await ClockCycles(dut.clk, 1)
     assert dut.uo_out.value == 50, "Output should be 50"
+    
+    uart.close()
+    dut._log.info("Serial port closed")
 
     # Keep testing the module by changing the input values, waiting for
     # one or more clock cycles, and asserting the expected output values.

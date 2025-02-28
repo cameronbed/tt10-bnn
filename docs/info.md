@@ -9,12 +9,12 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+UART reads in an image and the bnn tells you what it is
 
 ## How to test
 
-Explain how to use your project
+Need to apply a 28x28 image over uart and then it will get read
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+using a STM32 microcontroller
