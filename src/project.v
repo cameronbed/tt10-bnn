@@ -16,14 +16,14 @@ module tt_um_bnn (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  // controller bnn_controller(
-  //   .clk(clk),
-  //   .rst(rst_n),
-  //   .UART_Rx(ui_in[0:2]),
-  //   .UART_RTS(ui_in[3]),
-  //   .UART_Tx(uo_out[0:2]),
-  //   .UART_CTS(uo_out[3])
-  // );
+  bnn_controller bnn_controller(
+    .clk(clk),
+    .rst(rst_n),
+    .UART_Rx(ui_in[0:2]),
+    .UART_RTS(ui_in[3]),
+    .UART_Tx(uo_out[0:2]),
+    .UART_CTS(uo_out[3])
+  );
 
   // All output pins must be assigned. If not used, assign to 0.
   assign uo_out = 0;
