@@ -4,7 +4,6 @@ module uart_rx (
     input wire rst,
     input wire baud_clk,
 
-    output logic [6:0] data_out,
     input logic [6:0] data_in,
 
     input wire rx,
@@ -12,12 +11,10 @@ module uart_rx (
     input cts,
     output rts,
 
-    output tx_buffer_empty,
     output rx_buffer_empty,
     output logic data_valid    
 );
     logic [6:0] rx_buffer;
-    logic [6:0] tx_buffer;
 
     logic [3:0] bit_cnt;
     logic [8:0] shift_reg;
