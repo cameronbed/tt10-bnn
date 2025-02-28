@@ -18,10 +18,10 @@ project:
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "project.v"
-    # - "controller.sv"
-    # - "uart_rx.sv"
-    # - "spi_master.sv"
-    # - "baud_generator.sv"
+    - "controller.sv"
+    - "uart_rx.sv"
+    - "spi_master.sv"
+    - "baud_generator.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
