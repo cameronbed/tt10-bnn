@@ -22,6 +22,7 @@ project:
     - "baud_generator.sv"
     - "uart_rx.sv"
     - "uart_tx.sv"
+    - "image_buffer.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:

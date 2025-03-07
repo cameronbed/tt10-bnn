@@ -10,6 +10,7 @@ PROJECT_SOURCES += bnn_controller.sv
 PROJECT_SOURCES += baud_generator.sv
 PROJECT_SOURCES += uart_rx.sv
 PROJECT_SOURCES += uart_tx.sv
+PROJECT_SOURCES += image_buffer.sv
 
 ifneq ($(GATES),yes)
 
