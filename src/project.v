@@ -19,15 +19,14 @@ module tt_um_bnn (
   bnn_controller bnn_controller(
     .clk(clk),
     .rst(rst_n),
-    .UART_Rx(ui_in[2:0]),
-    .UART_RTS(ui_in[3]),
-    .UART_Tx(uo_out[2:0]),
-    .UART_CTS(uo_out[3])
+    .UART_Rx(ui_in[0]),
+    .UART_RTS(ui_in[1]),
+    .UART_Tx(uo_out[0]),
+    .UART_CTS(uo_out[1])
   );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out = 0;
-  assign ui_in = 0;
+  assign uo_out[7:2] = 0;
   assign uio_out = 0;
   assign uio_oe  = 0;
 
