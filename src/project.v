@@ -26,4 +26,13 @@ assign uio_oe  = 0;
 // List all unused inputs to prevent warnings
 wire _unused = &{ena, clk, rst_n, 1'b0};
 
+bnn_controller bnn_inst (
+    .clk(clk),
+    .rst(~rst_n),
+    .UART_Rx(ui_in[0]),
+    .UART_RTS(ui_in[1]),
+    .UART_Tx(uo_out[0]),
+    .UART_CTS(uo_out[1])
+);
+
 endmodule

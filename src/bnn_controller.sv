@@ -28,6 +28,9 @@ module bnn_controller (
 
     logic baud_clk_signal;
 
+    logic [7:0] rx_data;
+    logic rx_valid;
+
     // baud_rate_generator #(
     //     .BAUD_RATE(115200),
     //     .CLKS_PER_BIT(868) // Example for ~100MHz / 115200
@@ -37,27 +40,26 @@ module bnn_controller (
     //     .baud_clk(baud_clk_signal)
     // );
 
-    // uart_rx rx_inst (
-    //     .rst(rst),
-    //     .baud_clk(baud_clk_signal),
-    //     .data_out(),       // ...existing code...
-    //     .data_in(),
-    //     .rx(UART_Rx),
-    //     .cts(),
-    //     .rts(),
-    //     .tx_buffer_empty(),
-    //     .rx_buffer_empty(),
-    //     .data_valid()
-    // );
+    uart_rx rx_inst (
+        .rst(rst),
+        .baud_clk(baud_clk_signal),
+        .data_out(rx_data),
+        .data_valid(rx_valid),
+        .rx(UART_Rx),
+        .cts(),
+        .rts(),
+        .tx_buffer_empty(),
+        .rx_buffer_empty()
+    );
 
-    // uart_tx tx_inst (
-    //     .rst(rst),
-    //     .baud_clk(baud_clk_signal),
-    //     .data_in(),
-    //     .tx(UART_RTS),
-    //     .cts(),
-    //     .rts(),
-    //     .tx_buffer_empty()
-    // );
+    uart_tx tx_inst (
+        .rst(rst),
+        .baud_clk(baud_clk_signal),
+        .data_in(response_byte),
+        .tx(response_dv),
+        .cts(),
+        .rts(),
+        .tx_buffer_empty()
+    );
 
 endmodule

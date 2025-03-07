@@ -2,7 +2,7 @@ module uart_tx (
     input wire rst,
     input wire baud_clk,
 
-    input logic [6:0] data_in,
+    input logic [7:0] data_in,
 
     input wire tx,
 
@@ -14,7 +14,7 @@ module uart_tx (
     logic [6:0] tx_buffer;
 
     logic [3:0] bit_cnt;
-    logic [8:0] shift_reg;
+    logic [9:0] shift_reg;
     logic transmitting;
     
     always @(posedge baud_clk or posedge rst) begin
@@ -26,10 +26,11 @@ module uart_tx (
             if (!transmitting && tx) begin
                 transmitting <= 1;
                 bit_cnt <= 0;
+                shift_reg <= {1'b1, data_in, 1'b0}; // stop + data + start
             end
             
             if (transmitting) begin
-                shift_reg <= {1'b1, shift_reg[8:1]}; // Shift out data
+                shift_reg <= {1'b1, shift_reg[9:1]}; // Shift out data
                 bit_cnt <= bit_cnt + 1;
                 
                 if (bit_cnt == 8) begin

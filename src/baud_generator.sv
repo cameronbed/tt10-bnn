@@ -9,7 +9,7 @@ module baud_rate_generator #(
 
     logic [15:0] clk_count; // Counter for clock division
 
-    always_ff @(posedge i_Clk or negedge i_Rst_L) begin
+    always_ff @(posedge clk or negedge rst) begin
         if (!rst) begin
             clk_count  <= 0;
             baud_clk <= 0;

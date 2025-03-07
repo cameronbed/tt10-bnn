@@ -2,14 +2,14 @@ module uart_rx (
     input wire rst,
     input wire baud_clk,
 
-    input logic [6:0] data_in,
-
     input wire rx,
 
     input cts,
     output rts,
 
-    output rx_buffer_empty 
+    output rx_buffer_empty,
+    output logic [7:0] data_out,
+    output logic data_valid
 );
     logic [6:0] rx_buffer;
 
@@ -34,8 +34,8 @@ module uart_rx (
                 
                 if (bit_cnt == 8) begin
                     receiving <= 0;
-                    if (shift_reg[0] == 1 && shift_reg[8] == 0) begin // Valid start/stop bits
-                        data_out <= shift_reg[8:1];
+                    if (shift_reg[0] == 0 && shift_reg[8] == 1) begin // Valid start/stop bits
+                        data_out <= shift_reg[7:1];
                         data_valid <= 1;
                     end
                 end
