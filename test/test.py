@@ -74,7 +74,9 @@ async def test_project(dut):
     # test byte, 0xA5 (1010_0101)
     TEST_BYTE = 0xA5
 
+    dut._log.info("Preparing to send a test byte over UART")
     # transmit a byte into rx by manually w/ rx & baud_clk
+    dut._log.info(f"Sending 0x{TEST_BYTE:02X}")
     await uart_write_byte(dut, TEST_BYTE)
 
     # Wait some cycles
@@ -83,7 +85,7 @@ async def test_project(dut):
     # Check that rx_valid went high and rx_data == TEST_BYTE
     received_byte = dut.bnn_inst.rx_data.value.integer
     if dut.bnn_inst.rx_valid.value == 1:
-        dut._log.info(f"Received byte 0x{received_byte:02X}")
+        dut._log.info(f"Received byte 0x{received_byte:02X} successfully")
         assert received_byte == TEST_BYTE, f"Mismatch! Expected 0x{TEST_BYTE:02X}, got 0x{received_byte:02X}"
     else:
         raise AssertionError("data_valid never asserted after sending byte")
@@ -135,6 +137,7 @@ async def read_image_from_buffer(dut):
     return np.array(received_bits).reshape((28, 28))
 
 async def uart_write_byte(dut, byte_val):
+    dut._log.info(f"Transmitting byte 0x{byte_val:02X}")
     # Start bit (low)
     dut.ui_in[0].value = 0  # rx (was dut.rx)
     await pulse_baud(dut)  # one bit time
@@ -148,6 +151,7 @@ async def uart_write_byte(dut, byte_val):
     # Stop bit (high)
     dut.ui_in[0].value = 1 
     await pulse_baud(dut)
+    dut._log.info("Completed UART write operation")
 
 
 async def pulse_baud(dut):
