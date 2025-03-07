@@ -16,17 +16,37 @@ module tt_um_bnn (
     input  wire       rst_n     // reset_n - low to reset
 );
 
+// Output
+// logic result[0:4];
+
+// Input
+assign ui_in[0] = UART_Rx;
+assign ui_in[1] = UART_RTS;
+assign ui_in[2] = 0;
+assign ui_in[3] = 0;
+assign ui_in[4] = 0;
+assign ui_in[5] = 0;
+assign ui_in[6] = 0;
+assign ui_in[7] = 0;
+
+// Output
+assign uo_out[0] = UART_Tx;
+assign uo_out[1] = UART_CTS;
+assign uo_out[2] = 0;
+assign uo_out[3] = 0;
+assign uo_out[4] = 0;
+assign uo_out[5] = 0;
+assign uo_out[6] = 0;
+assign uo_out[7] = 0;
+
 bnn_controller bnn_inst (
     .clk(clk),
     .rst(~rst_n),
-    .UART_Rx(ui_in[0]),
-    .UART_RTS(ui_in[1]),
-    .UART_Tx(uo_out[0]),
-    .UART_CTS(uo_out[1])
+    .UART_Rx(UART_Rx),
+    .UART_RTS(UART_RTS),
+    .UART_Tx(UART_Tx),
+    .UART_CTS(UART_CTS)
 );
-
-// Force outputs to zero for the test to pass
-assign uo_out = 8'b0;
 
 // All output pins must be assigned. If not used, assign to 0.
 assign uio_out = 0;
