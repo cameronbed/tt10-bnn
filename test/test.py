@@ -21,9 +21,9 @@ async def test_project(dut):
     
     # initial reset sequence
     dut.rst_n.value = 0  
-    dut.rts.value = 0  
-    dut.rx.value  = 1
-    dut.baud_clk.value = 0
+    dut.ui_in[1].value = 0  # rts (was dut.rts)
+    dut.ui_in[0].value  = 1  # rx (was dut.rx)
+    dut.uio_in[0].value = 0  # baud_clk (was dut.baud_clk)
     await ClockCycles(dut.clk, 5)
 
     dut.rst_n.value = 1  
@@ -32,7 +32,7 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 10)
 
     # Enable the remote side to send data (rts=1). will assert CTS when idle
-    dut.rts.value = 1
+    dut.ui_in[1].value = 1
     await ClockCycles(dut.clk, 10)
 
     # test byte, 0xA5 (1010_0101)
@@ -55,25 +55,25 @@ async def test_project(dut):
 
 async def uart_write_byte(dut, byte_val):
     # Start bit (low)
-    dut.rx.value = 0
+    dut.ui_in[0].value = 0  # rx (was dut.rx)
     await pulse_baud(dut)  # one bit time
 
     # Send 8 data bits, LSB first
     for i in range(8):
         bit_val = (byte_val >> i) & 1
-        dut.rx.value = bit_val
+        dut.ui_in[0].value = bit_val  # rx (was dut.rx)
         await pulse_baud(dut)
 
     # Stop bit (high)
-    dut.rx.value = 1
+    dut.ui_in[0].value = 1  # rx (was dut.rx)
     await pulse_baud(dut)
 
 
 async def pulse_baud(dut):
     # Raise baud_clk for one clk cycle
-    dut.baud_clk.value = 1
+    dut.uio_in[0].value = 1  # baud_clk (was dut.baud_clk)
     await RisingEdge(dut.clk)
 
     # Lower baud_clk for one clk cycle
-    dut.baud_clk.value = 0
+    dut.uio_in[0].value = 0  # baud_clk (was dut.baud_clk)
     await RisingEdge(dut.clk)

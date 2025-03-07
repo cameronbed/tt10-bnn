@@ -1,6 +1,7 @@
 // uart_rx.sv
 // uart rx module
 // Assumes 'clk_freq / baud_rate == BAUD_DIV' is an integer
+
 module uart_rx (
     input  wire clk,
     input  wire rst,
@@ -18,15 +19,15 @@ module uart_rx (
     IDLE,   // No data, line is high
     START,  // Detected start bit (rx=0)
     RECV,   // Receiving 8 data bits
-    STOP,   // Stop bit
+    STOP,   // Sto
     DONE    // One-cycle state to pulse data_valid
   } state_t;
 
   state_t   state, next_state;
-  logic [7:0] shift_reg;       // Shift in the 8 received bits
-  logic [2:0] bit_count;       // Counts from 0..7 for 8 data bits
-  logic       valid_reg;       // Internal register for data_valid
-  logic [7:0] data_reg;        // Latches final received byte
+  logic [7:0] shift_reg;
+  logic [2:0] bit_count;
+  logic       valid_reg;
+  logic [7:0] data_reg;
 
   // Outputs
   assign data_out      = data_reg;

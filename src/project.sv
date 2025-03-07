@@ -14,12 +14,13 @@ module tt_um_bnn (
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
-);
+    );
 
 // Output
 // logic result[0:4];
 
 // Input
+wire baud_clk;
 wire UART_Rx;
 wire UART_RTS;
 
@@ -27,14 +28,16 @@ wire UART_RTS;
 wire UART_Tx;
 wire UART_CTS;
 
-assign UART_Rx = ui_in[0];
+assign UART_Rx  = ui_in[0];
 assign UART_RTS = ui_in[1];
+assign baud_clk = uio_in[0];
 assign uo_out[0] = UART_Tx;
 assign uo_out[1] = UART_CTS;
 
 bnn_controller bnn_inst (
     .clk(clk),
     .rst_n(~rst_n),
+    .baud_clk(baud_clk),
     .UART_Rx(UART_Rx),
     .UART_RTS(UART_RTS),
     .UART_Tx(UART_Tx),

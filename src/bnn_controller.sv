@@ -3,7 +3,8 @@
 
 module bnn_controller (
     input  wire clk,
-    input wire rst_n,  // corrected signal name
+    input wire rst_n,
+    input wire baud_clk,
 
     // UART Input
     input logic UART_Rx,
@@ -26,7 +27,7 @@ module bnn_controller (
     logic [7:0] response_byte;
     logic response_dv;
 
-    logic baud_clk_signal;
+    // logic baud_clk_signal;
 
     logic [7:0] rx_data;
     logic rx_valid;
@@ -43,7 +44,7 @@ module bnn_controller (
     uart_rx rx_inst(
         .clk(clk),
         .rst(~rst_n),
-        .baud_clk(baud_clk_signal),
+        .baud_clk(baud_clk),
         .data_out(rx_data),
         .data_valid(rx_valid),
         .rx(UART_Rx),
