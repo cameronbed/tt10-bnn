@@ -3,7 +3,7 @@
 
 # defaults
 SIM ?= icarus
-TOPLEVEL_LANG ?= verilog
+TOPLEVEL_LANG ?= systemverilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = project.sv
 PROJECT_SOURCES += bnn_controller.sv
