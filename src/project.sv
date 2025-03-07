@@ -20,24 +20,12 @@ module tt_um_bnn (
 // logic result[0:4];
 
 // Input
-assign ui_in[0] = UART_Rx;
-assign ui_in[1] = UART_RTS;
-assign ui_in[2] = 0;
-assign ui_in[3] = 0;
-assign ui_in[4] = 0;
-assign ui_in[5] = 0;
-assign ui_in[6] = 0;
-assign ui_in[7] = 0;
+wire UART_Rx = ui_in[0];
+wire UART_RTS  = ui_in[1];
 
 // Output
-assign uo_out[0] = UART_Tx;
-assign uo_out[1] = UART_CTS;
-assign uo_out[2] = 0;
-assign uo_out[3] = 0;
-assign uo_out[4] = 0;
-assign uo_out[5] = 0;
-assign uo_out[6] = 0;
-assign uo_out[7] = 0;
+wire UART_Tx = uo_out[0];
+wire UART_CTS = uo_out[1];
 
 bnn_controller bnn_inst (
     .clk(clk),
