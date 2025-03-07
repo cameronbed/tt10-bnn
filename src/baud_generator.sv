@@ -1,4 +1,4 @@
-module baud_rate_generator #(
+module baud_generator #(
     parameter int BAUD_RATE = 8,  // UART Baud Rate Clock rate
     parameter int CLKS_PER_BIT = 8 // CLKS_PER_BIT = clk / BaudRate
 )(
