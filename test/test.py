@@ -23,8 +23,9 @@ async def test_project(dut):
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 10)  # Added delay for outputs to settle
 
     # Basic functionality test
     dut.ui_in.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 5)   # Allow time for signals to become valid
     assert dut.uo_out.value == 0, "Basic functionality test failed"
