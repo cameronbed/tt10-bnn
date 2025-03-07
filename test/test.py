@@ -84,7 +84,7 @@ async def test_project(dut):
 
     # Check that rx_valid went high and rx_data == TEST_BYTE
     received_byte = dut.user_project.bnn_inst.rx_data.value.integer
-    if dut.bnn_inst.rx_valid.value == 1:
+    if dut.user_project.bnn_inst.rx_valid.value == 1:
         dut._log.info(f"Received byte 0x{received_byte:02X} successfully")
         assert received_byte == TEST_BYTE, f"Mismatch! Expected 0x{TEST_BYTE:02X}, got 0x{received_byte:02X}"
     else:
