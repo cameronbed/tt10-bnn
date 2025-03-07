@@ -20,15 +20,15 @@ async def test_project(dut):
     dut.ena.value = 1
     
     # initial reset sequence
-    dut.rst.value = 0
-    dut.rts.value = 0  # remote side not requesting to send yet
-    dut.rx.value  = 1  # idle line (UART is idle-high)
+    dut.rst_n.value = 0  
+    dut.rts.value = 0  
+    dut.rx.value  = 1
     dut.baud_clk.value = 0
     await ClockCycles(dut.clk, 5)
 
-    dut.rst.value = 1  # assert reset
+    dut.rst_n.value = 1  
     await ClockCycles(dut.clk, 5)
-    dut.rst.value = 0  # deassert reset
+    dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
 
     # Enable the remote side to send data (rts=1). will assert CTS when idle

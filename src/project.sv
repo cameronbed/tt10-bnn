@@ -34,7 +34,7 @@ assign uo_out[1] = UART_CTS;
 
 bnn_controller bnn_inst (
     .clk(clk),
-    .rst(~rst_n),
+    .rst_n(~rst_n),
     .UART_Rx(UART_Rx),
     .UART_RTS(UART_RTS),
     .UART_Tx(UART_Tx),
