@@ -19,9 +19,9 @@ project:
   source_files:
     - "project.v"
     - "bnn_controller.sv"
-    - "baud_generator.sv"
-    - "uart_rx.sv"
-    - "uart_tx.sv"
+    # - "baud_generator.sv"
+    # - "uart_rx.sv"
+    # - "uart_tx.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
