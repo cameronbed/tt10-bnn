@@ -6,7 +6,7 @@ module bnn_controller (
     input wire rst,
 
     // UART Input
-    input  logic UART_Rx,
+    input logic UART_Rx,
     input logic UART_RTS,
 
     // UART Output
