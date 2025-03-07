@@ -153,7 +153,6 @@ async def uart_write_byte(dut, byte_val):
     await pulse_baud(dut)
     dut._log.info("Completed UART write operation")
 
-
 async def pulse_baud(dut):
     # Raise baud_clk for one clk cycle
     dut.uio_in[0].value = 1  

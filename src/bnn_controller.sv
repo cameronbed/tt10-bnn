@@ -12,7 +12,11 @@ module bnn_controller (
 
     // UART Output
     output logic UART_Tx,
-    output logic UART_CTS
+    output logic UART_CTS,
+
+    // testbench access
+    output logic [7:0] rx_data,
+    output logic rx_valid
 );
 
 // Define system states
@@ -29,9 +33,6 @@ module bnn_controller (
 
     // logic baud_clk_signal;
 
-    logic [7:0] rx_data;
-    logic rx_valid;
-
     // baud_rate_generator #(
     //     .BAUD_RATE(115200),
     //     .CLKS_PER_BIT(868) // Example for ~100MHz / 115200
@@ -45,8 +46,8 @@ module bnn_controller (
         .clk(clk),
         .rst(~rst_n),
         .baud_clk(baud_clk),
-        .data_out(rx_data),
-        .data_valid(rx_valid),
+        .data_out(rx_data),  // Connect to internal signal
+        .data_valid(rx_valid),  // Connect to internal signal
         .rx(UART_Rx),
         .rx_buffer_empty(),
         .cts(UART_CTS),
