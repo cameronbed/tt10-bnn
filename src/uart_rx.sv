@@ -1,3 +1,6 @@
+// uart_rx.sv
+// uart rx module
+// Assumes 'clk_freq / baud_rate == BAUD_DIV' is an integer
 module uart_rx (
     input  wire clk,
     input  wire rst,
@@ -10,6 +13,98 @@ module uart_rx (
     output wire rx_buffer_empty
 );
 
-    // UART receiver logic here
+  // states
+  typedef enum logic [2:0] {
+    IDLE,   // No data, line is high
+    START,  // Detected start bit (rx=0)
+    RECV,   // Receiving 8 data bits
+    STOP,   // Stop bit
+    DONE    // One-cycle state to pulse data_valid
+  } state_t;
+
+  state_t   state, next_state;
+  logic [7:0] shift_reg;       // Shift in the 8 received bits
+  logic [2:0] bit_count;       // Counts from 0..7 for 8 data bits
+  logic       valid_reg;       // Internal register for data_valid
+  logic [7:0] data_reg;        // Latches final received byte
+
+  // Outputs
+  assign data_out      = data_reg;
+  assign data_valid    = valid_reg;
+  assign rx_buffer_empty = (state == IDLE);
+
+  assign cts = (state == IDLE) && rts;
+
+  // State machine
+  always_ff @(posedge clk) begin
+    if (rst) begin
+      state <= IDLE;
+      shift_reg <= 8'h00;
+      bit_count <= 3'd0;
+      data_reg <= 8'h00;
+      valid_reg <= 1'b0;
+    end
+    else begin
+      state <= next_state;
+      valid_reg <= 1'b0;
+
+      if (baud_clk) begin
+        case (state)
+          START: begin
+          end
+
+          RECV: begin
+            shift_reg <= {rx, shift_reg[7:1]};
+            bit_count <= bit_count + 1'b1;
+          end
+
+          STOP: begin
+          end
+
+          DONE: begin
+            data_reg  <= shift_reg;
+            valid_reg <= 1'b1;
+          end
+        endcase
+      end
+    end
+  end
+
+  // Next-state logic
+  always_comb begin
+    next_state = state;
+
+    case (state)
+      IDLE: begin
+        if ((rx == 1'b0) && cts) begin
+          next_state = START;
+        end
+      end
+
+      START: begin
+        if (baud_clk) begin
+          next_state = RECV;
+        end
+      end
+
+      RECV: begin
+        if (baud_clk && (bit_count == 3'd7)) begin
+          next_state = STOP;
+        end
+      end
+
+      STOP: begin
+        if (baud_clk) begin
+          next_state = DONE;
+        end
+      end
+
+      DONE: begin
+        next_state = IDLE;
+      end
+
+      default: next_state = IDLE;
+    endcase
+  end
 
 endmodule
