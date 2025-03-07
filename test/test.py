@@ -29,3 +29,8 @@ async def test_project(dut):
     dut.ui_in.value = 1
     await ClockCycles(dut.clk, 5)   # Allow time for signals to become valid
     assert dut.uo_out.value == 0, "Basic functionality test failed"
+
+    # UART RX and TX test
+    dut.ui_in.value = 0b00000001  # Set UART_Rx[0] to 1
+    await ClockCycles(dut.clk, 10)
+    assert dut.uo_out.value == 0b00000001, "UART RX and TX test failed"

@@ -41,24 +41,25 @@ module bnn_controller (
     // );
 
     uart_rx rx_inst (
+        .clk(clk),
         .rst(rst),
         .baud_clk(baud_clk_signal),
         .data_out(rx_data),
         .data_valid(rx_valid),
         .rx(UART_Rx),
-        .cts(),
-        .rts(),
-        .tx_buffer_empty(),
+        .cts(UART_CTS),
+        .rts(UART_RTS),
         .rx_buffer_empty()
     );
 
     uart_tx tx_inst (
+        .clk(clk),
         .rst(rst),
         .baud_clk(baud_clk_signal),
         .data_in(response_byte),
         .tx(response_dv),
-        .cts(),
-        .rts(),
+        .cts(UART_CTS),
+        .rts(UART_RTS),
         .tx_buffer_empty()
     );
 

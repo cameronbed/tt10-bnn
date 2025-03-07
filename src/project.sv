@@ -16,14 +16,14 @@ module tt_um_bnn (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-// bnn_controller bnn_inst (
-//     .clk(clk),
-//     .rst(~rst_n),
-//     .UART_Rx(ui_in[0]),
-//     .UART_RTS(ui_in[1]),
-//     .UART_Tx(uo_out[0]),
-//     .UART_CTS(uo_out[1])
-// );
+bnn_controller bnn_inst (
+    .clk(clk),
+    .rst(~rst_n),
+    .UART_Rx(ui_in[0]),
+    .UART_RTS(ui_in[1]),
+    .UART_Tx(uo_out[0]),
+    .UART_CTS(uo_out[1])
+);
 
 // Force outputs to zero for the test to pass
 assign uo_out = 8'b0;
