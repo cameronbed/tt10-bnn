@@ -19,9 +19,9 @@ module tt_um_bnn (
   bnn_controller bnn_controller(
     .clk(clk),
     .rst(rst_n),
-    .UART_Rx(ui_in[0:2]),
+    .UART_Rx(ui_in[2:0]),
     .UART_RTS(ui_in[3]),
-    .UART_Tx(uo_out[0:2]),
+    .UART_Tx(uo_out[2:0]),
     .UART_CTS(uo_out[3])
   );
 
